@@ -14,7 +14,7 @@ export class JwtStrategy extends
         });
     }
     async validate(payload: any) {
-
+        console.log(payload)
         return payload;
     }
 }

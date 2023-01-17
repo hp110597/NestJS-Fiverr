@@ -36,61 +36,70 @@ export class AuthService {
     role: string,
     skill: string,
     certification: string,
-  ): Promise<any>{
+  ): Promise<any> {
     let checkEmail = await this.prisma.nguoiDung.findFirst({
-      where:{
+      where: {
         email,
-      }
-    })
-    if(checkEmail){
+      },
+    });
+    if (checkEmail) {
       return {
-        check:false,
-        data:"Email đã tồn tại"
-      }
-    }else{
+        check: false,
+        data: 'Email đã tồn tại',
+      };
+    } else {
       let dataSignup = await this.prisma.nguoiDung.create({
-        data:{name,email,pass_word,phone,birth_day,gender,role,skill,certification}
-      })
+        data: {
+          name,
+          email,
+          pass_word,
+          phone,
+          birth_day,
+          gender,
+          role,
+          skill,
+          certification,
+        },
+      });
       return {
-        check:true,
-        data:dataSignup,
-        message:"Đăng kí thành công"
-      }
+        check: true,
+        data: { dataSignup, content: 'Đăng kí thành công' },
+      };
     }
   }
 
-  // async login(email: string, mat_khau: string): Promise<any> {
-  //   let checkEmail = await this.prisma.nguoi_dung.findFirst({
-  //     where: {
-  //       email,
-  //     },
-  //   });
-  //   if (checkEmail) {
-  //     //email đúng
-  //     if (checkEmail.mat_khau == mat_khau) {
-  //       let token = this.jwt.sign(checkEmail, {
-  //         expiresIn: '2d',
-  //         secret: this.config.get('SECRET_KEY'),
-  //       });
+  async login(email: string, mat_khau: string): Promise<any> {
+    let checkEmail = await this.prisma.nguoiDung.findFirst({
+      where: {
+        email,
+      },
+    });
+    if (checkEmail) {
+      //email đúng
+      if (checkEmail.pass_word == mat_khau) {
+        let token = this.jwt.sign(checkEmail, {
+          expiresIn: '2d',
+          secret: this.config.get('SECRET_KEY'),
+        });
 
-  //       //pass đúng
-  //       return {
-  //         check: true,
-  //         data: token,
-  //       };
-  //     } else {
-  //       //pass sai
-  //       return {
-  //         check: false,
-  //         data: 'Mật khẩu sai !',
-  //       };
-  //     }
-  //   } else {
-  //     //email sai
-  //     return {
-  //       check: false,
-  //       data: 'Email sai',
-  //     };
-  //   }
-  // }
+        //pass đúng
+        return {
+          check: true,
+          data: { checkEmail, token },
+        };
+      } else {
+        //pass sai
+        return {
+          check: false,
+          data: 'Mật khẩu sai !',
+        };
+      }
+    } else {
+      //email sai
+      return {
+        check: false,
+        data: 'Email sai',
+      };
+    }
+  }
 }

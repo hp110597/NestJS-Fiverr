@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TaskModule } from './task/task.module';
+import { BinhluanModule } from './binhluan/binhluan.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { TaskModule } from './task/task.module';
       isGlobal: true
     }),
     AuthModule,
-    TaskModule
+    TaskModule,
+    BinhluanModule,
   ],
   controllers: [AppController],
   providers: [AppService],

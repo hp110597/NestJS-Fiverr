@@ -26,12 +26,24 @@ export class AuthController {
            const {name,email,pass_word,phone,birth_day,gender,role,skill,certification} = body
            let checkSignup = await this.authSerivice.signup(name,email,pass_word,phone,birth_day,gender,role,skill,certification)
            if (checkSignup.check){
-            return checkSignup.data,checkSignup.message
+            return checkSignup.data
            }else{
             throw new HttpException(checkSignup.data,HttpStatus.BAD_REQUEST)
            }
        }
-
+      //login
+      @ApiBody({type:NguoiDungLoginDto})
+      @Post("signin")
+      async login(@Body() body:NguoiDungLoginDto):Promise<string>{
+        const {email,mat_khau}=body
+        let checkLogin = await this.authSerivice.login(email,mat_khau)
+        if(checkLogin.check){
+            //trả vê token
+            return checkLogin.data
+        }else{
+            throw new HttpException(checkLogin.data,HttpStatus.BAD_REQUEST)
+        }
+      }
        
 
 
