@@ -130,4 +130,42 @@ export class BinhluanService {
       };
     }
   }
+
+   //getbinhluan theo id công việc
+
+   async getBinhLuanTheoIDCongViec(congviec_id:string): Promise<any> {
+    let dataBinhLuan = await this.prisma.binhLuan.findMany({
+      where:{
+        congviec_id:+congviec_id
+      },
+ 
+      include:{
+        NguoiDung:{
+          select:{
+            name:true,
+          }
+        },
+        
+        CongViec:{
+          select:{
+            ten_cong_viec:true
+          }
+        }
+      }
+      
+    });
+    if(dataBinhLuan){
+      return {
+        chekc:true,
+        data: { content: 'Lấy bình luận thành công', dataBinhLuan },
+      };
+    }else{
+      return {
+        chekc:false,
+        data: { content: 'Kiểm tra lại id công việc'},
+      };
+    }
+  
+  }
+
 }

@@ -110,4 +110,19 @@ export class BinhluanController {
     }    
   }
 
+    //getbinhluan theo id cong-viec
+  //   @UseGuards(AuthGuard('jwt'))
+  @ApiParam({name:"congviec_id"})
+  @Get('binh-luan/lay-binh-luan-theo-id-cong-viec/:congviec_id')
+  async getBinhLuanTheoIDCongViec(@Req() req: Request): Promise<any> {
+    let {congviec_id} = req.params
+    let checkComment = await  this.binhluanService.getBinhLuanTheoIDCongViec(congviec_id);
+    if (checkComment.check) {
+      return checkComment.data;
+    } else {
+      throw new HttpException(checkComment.data, HttpStatus.BAD_REQUEST);
+    }   
+  }
+
+
 }

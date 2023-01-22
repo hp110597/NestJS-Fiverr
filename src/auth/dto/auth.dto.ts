@@ -31,6 +31,9 @@ export class NguoiDungDto {
 
   @ApiProperty({ description: 'certification', type: String })
   certification: string;
+
+  @ApiProperty({ description: 'avatar', type: String })
+  avatar: string;
 }
 
 export class NguoiDungLoginDto {
