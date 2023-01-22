@@ -59,15 +59,16 @@ export class BinhluanService {
   //putBinhLuan
   async putBinhLuan(
     congviec_id: number,
-    nguoidung_id: number,
     ngay_binh_luan: string,
     noi_dung: string,
     sao_binh_luan: number,
     binhluan_id: string,
+    dataToken:any
   ): Promise<any> {
     let checkComment = await this.prisma.binhLuan.findFirst({
       where: {
         binhluan_id: +binhluan_id,
+        nguoidung_id:dataToken.nguoidung_id
       },
     });
     if (!checkComment) {
@@ -82,7 +83,6 @@ export class BinhluanService {
           ngay_binh_luan,
           noi_dung,
           sao_binh_luan,
-          nguoidung_id,
         },
         where: {
           binhluan_id: +binhluan_id,

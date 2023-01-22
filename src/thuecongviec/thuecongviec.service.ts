@@ -51,7 +51,6 @@ export class ThuecongviecService {
   //post thue-cong-viec
   async postThueCongViec(
     congviec_id: number,
-    nguoidung_id: number,
     ngay_thue: string,
     hoan_thanh: boolean,
     tokenData: any,
@@ -172,7 +171,6 @@ export class ThuecongviecService {
   async putThueCongViec(
     id: string,
     congviec_id: number,
-    nguoidung_id: number,
     ngay_thue: string,
     hoan_thanh: boolean,
     tokenData: any,

@@ -59,10 +59,9 @@ export class ThuecongviecController {
     @Body() body: ThueCongViecDto,
   ): Promise<any> {
     let dataToken = req.user;
-    let { congviec_id, nguoidung_id, ngay_thue, hoan_thanh } = body;
+    let { congviec_id, ngay_thue, hoan_thanh } = body;
     let checkUser = await this.thuecongviecService.postThueCongViec(
       congviec_id,
-      nguoidung_id,
       ngay_thue,
       hoan_thanh,
       dataToken,
@@ -142,12 +141,11 @@ export class ThuecongviecController {
     @Body() body: ThueCongViecDto,
   ): Promise<any> {
     const { id } = req.params;
-    const { congviec_id, nguoidung_id, ngay_thue, hoan_thanh } = body;
+    const { congviec_id, ngay_thue, hoan_thanh } = body;
     let dataToken = req.user;
     let checkDataThueCongViec = await this.thuecongviecService.putThueCongViec(
       id,
       congviec_id,
-      nguoidung_id,
       ngay_thue,
       hoan_thanh,
       dataToken,

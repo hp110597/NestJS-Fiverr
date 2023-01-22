@@ -74,16 +74,17 @@ export class BinhluanController {
     @Body() body: BinhLuanDto,
   
   ): Promise<any> {
-    let { congviec_id, nguoidung_id, ngay_binh_luan, noi_dung, sao_binh_luan } =
+    let dataToken = req.user
+    let { congviec_id, ngay_binh_luan, noi_dung, sao_binh_luan } =
       body;
       let {binhluan_id}=req.params
     let checkComment = await this.binhluanService.putBinhLuan(
       congviec_id,
-      nguoidung_id,
       ngay_binh_luan,
       noi_dung,
       sao_binh_luan,
-      binhluan_id
+      binhluan_id,
+      dataToken
     );
     if (checkComment.check) {
       return checkComment.data;
